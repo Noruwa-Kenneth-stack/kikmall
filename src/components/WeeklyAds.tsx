@@ -30,7 +30,7 @@ const WeeklyAdsSection: React.FC<WeeklyAdsSectionProps> = ({
         value={activeTab}
         onValueChange={(val: string) =>
           onTabChange(val as "featured" | "latest" | "a-z")
-        }
+        }      
       >
         <TabsList className="grid w-full grid-cols-3 sm:w-fit">
           <TabsTrigger value="featured">Featured</TabsTrigger>
