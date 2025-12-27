@@ -4,12 +4,12 @@ import { query } from "@/lib/db";
 
 export async function GET(
   req: Request,
-  context: { params: { term: string } }
+  context: { params: Promise<{ term: string }> }
 ) {
   try {
     const { searchParams } = new URL(req.url);
     const city = searchParams.get("city");
-    const rawTerm = context.params.term; // 👈 from the dynamic route segment
+    const rawTerm = (await context.params).term; // 👈 from the dynamic route segment
 
     const term = rawTerm?.trim().toLowerCase();
 
