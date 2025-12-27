@@ -1,16 +1,14 @@
 import { NextResponse } from "next/server";
-import { Pool } from "pg";
+import { query } from "@/lib/db";
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
+export const runtime = "nodejs";
 
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const city = searchParams.get("city") || "Ojo"; // default to Ojo
 
-    const result = await pool.query(
+    const result = await query(
       `
       SELECT id, image, title, subtitle, price, offer, hotkey, city
       FROM product_ads
