@@ -95,16 +95,35 @@ export default function StoreDetails({ storeName }: StoreDetailsProps) {
 
         const storeData: { stores?: Partial<Store>[] } = await storeRes.json();
 
-        const storesArray: Store[] = (storeData.stores ?? []).map((raw) => ({
-          id: raw.id ?? 0,
-          storeName: raw.storeName ?? "Unknown Store",
-          logo: raw.logo ?? "/icons/default.png",
-          imageUrl: raw.logo ?? "/icons/default.png",
-          status: raw.status ?? "Available",
-          city: raw.city ?? "",
-          created_at: raw.created_at ?? new Date().toISOString(),
-          categories: raw.categories ?? [],
-        }));
+     const storesArray: Store[] = (storeData.stores ?? []).map((raw) => ({
+  id: raw.id ?? 0,
+
+  // API naming mismatch handled here
+  store_name: raw.store_name ?? raw.storeName ?? "Unknown Store",
+  storeName: raw.storeName ?? raw.store_name ?? "Unknown Store",
+
+  logo: raw.logo ?? "/icons/default.png",
+  imageUrl: raw.imageUrl ?? raw.logo ?? "/icons/default.png",
+
+  status: raw.status ?? "Available",
+  city: raw.city ?? null,
+  created_at: raw.created_at ?? new Date().toISOString(),
+  featured: raw.featured ?? false,
+
+  categories: raw.categories ?? [],
+
+  // REQUIRED but not returned by API → must exist
+  opening_hours: raw.opening_hours ?? null,
+  address: raw.address ?? null,
+
+  // PostGIS fields (not returned here)
+  lat: raw.lat ?? null,
+  lon: raw.lon ?? null,
+
+  // computed by API (not present)
+  distance_km: raw.distance_km ?? null,
+}));
+
 
         if (storesArray.length === 0) throw new Error("No stores found");
         setStores(storesArray);
