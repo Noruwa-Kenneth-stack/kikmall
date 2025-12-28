@@ -31,3 +31,5 @@ export interface FlyerProduct {
   store_logo?: string;
   city: string;
 }
+
+export type Product = FlyerProduct;
