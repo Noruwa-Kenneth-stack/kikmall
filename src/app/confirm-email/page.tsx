@@ -1,20 +1,19 @@
 "use client";
 
-import { useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState, Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useRouter } from "next/navigation";
-// import SignupHeader from "@/components/SignupHeader";
 
-const ConfirmEmail = () => {
+function ConfirmEmailContent() {
   const [code, setCode] = useState("");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
-  const searchParams = useSearchParams();
+
+  const searchParams = useSearchParams(); // ✅ now safe
   const email = searchParams.get("email");
   const router = useRouter();
 
@@ -30,27 +29,21 @@ const ConfirmEmail = () => {
         body: JSON.stringify({ email, code }),
       });
 
-      // Check if response is OK before parsing JSON
       if (!res.ok) {
-        const errorData = await res.json().catch(() => ({ message: 'Unexpected error occurred' }));
-        throw new Error(errorData.message || 'Verification failed');
+        const errorData = await res.json().catch(() => ({
+          message: "Unexpected error occurred",
+        }));
+        throw new Error(errorData.message || "Verification failed");
       }
 
-      const data = await res.json();
-
-      if (res.ok) {
-        alert("✅ Email verified successfully! You can now log in.");
-        router.push("/SignIn");
-      } else {
-        setErrorMsg(data.message || "Verification failed!");
-      }
+      alert("✅ Email verified successfully! You can now log in.");
+      router.push("/SignIn");
     } catch (error) {
-      console.error("Verification failed:", error);
-      if (error instanceof Error) {
-        setErrorMsg(error.message || "Failed to verify email. Please try again.");
-      } else {
-        setErrorMsg("Failed to verify email. Please try again.");
-      }
+      setErrorMsg(
+        error instanceof Error
+          ? error.message
+          : "Failed to verify email. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -71,8 +64,7 @@ const ConfirmEmail = () => {
       });
 
       setErrorMsg("Verification code resent successfully. Please check your email.");
-    } catch (error) {
-      console.error("Resend failed:", error);
+    } catch {
       setErrorMsg("Failed to resend verification code. Please try again.");
     } finally {
       setResendLoading(false);
@@ -87,7 +79,11 @@ const ConfirmEmail = () => {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <p>In order to verify your account, please enter your verification code below.</p>
+            <p>
+              In order to verify your account, please enter your verification
+              code below.
+            </p>
+
             <div className="space-y-2">
               <Label htmlFor="code">Verification code</Label>
               <Input
@@ -99,8 +95,9 @@ const ConfirmEmail = () => {
                 required
               />
             </div>
+
             <div className="text-sm text-gray-600">
-              Didn&apos;t receive a verification code? Please check your spam or junk mail folder or{" "}
+              Didn&apos;t receive a verification code?{" "}
               <Button
                 variant="link"
                 onClick={handleResendCode}
@@ -109,13 +106,13 @@ const ConfirmEmail = () => {
                 {resendLoading ? "Resending..." : "Resend"}
               </Button>
             </div>
-            {errorMsg && <p className="text-red-600 text-sm text-center">{errorMsg}</p>}
+
+            {errorMsg && (
+              <p className="text-red-600 text-sm text-center">{errorMsg}</p>
+            )}
+
             <div className="flex justify-center">
-              <Button
-                type="submit"
-                disabled={loading}
-                className="w-1/2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-md transition duration-200 ease-in-out"
-              >
+              <Button type="submit" disabled={loading} className="w-1/2">
                 {loading ? "Verifying..." : "Continue"}
               </Button>
             </div>
@@ -124,6 +121,13 @@ const ConfirmEmail = () => {
       </Card>
     </div>
   );
-};
+}
 
-export default ConfirmEmail;
+export default function ConfirmEmailPage() {
+  return (
+    <Suspense fallback={null}>
+      <ConfirmEmailContent />
+    </Suspense>
+  );
+}
+ 
