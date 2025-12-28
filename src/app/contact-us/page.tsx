@@ -17,14 +17,13 @@ import {
   Loader2,
   Sparkles,
 } from "lucide-react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 export default function ContactPage() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const pathname = usePathname();
-const searchParams = useSearchParams();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -64,7 +63,6 @@ const searchParams = useSearchParams();
   
 
   // Extract search params string to a variable
-  const searchParamsString = searchParams?.toString() ?? "";
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -78,7 +76,7 @@ const searchParams = useSearchParams();
         element.scrollIntoView({ behavior: "smooth" });
       }, 50);
     }
-  }, [pathname, searchParamsString]); // clean dependency array
+  }, [pathname]); // clean dependency array
 
 
   if (submitted) {
