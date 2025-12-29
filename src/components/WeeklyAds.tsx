@@ -4,6 +4,7 @@ import React from "react";
 import StoreGrid from "@/components/StoreGrid";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Store } from "@/hooks/useStoresFromDB";
+import EmptyStores from "@/components/EmptyStores";
 
 interface WeeklyAdsSectionProps {
   activeTab: "featured" | "latest" | "a-z";
@@ -22,6 +23,15 @@ const WeeklyAdsSection: React.FC<WeeklyAdsSectionProps> = ({
   stores,
   isLoading,
 }) => {
+
+ if (isLoading) {
+    return <StoreGrid isLoading stores={[]} activeTab={activeTab} />;
+  }
+
+  if (!isLoading && stores.length === 0) {
+    return <EmptyStores city={city} />;
+  }
+
   return (
 <div className="p-0">
   <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
