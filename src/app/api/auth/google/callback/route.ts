@@ -107,6 +107,11 @@ export async function GET(req: NextRequest) {
       { expiresIn: "7d" }
     );
 
+console.log("TOKEN DATA:", tokenData);
+console.log("PROFILE RESPONSE STATUS:", profileRes.status);
+console.log("PROFILE:", profile);
+
+
     // 6. Prepare response and set cookie
     const response = NextResponse.redirect(
       `${process.env.NEXT_PUBLIC_BASE_URL}/auth/success`

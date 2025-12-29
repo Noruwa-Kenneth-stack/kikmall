@@ -102,8 +102,8 @@ export default function ProductCard({
               <Image
                 src={
                   product.image
-                    ? `/productads/${product.image}`
-                    : "/productads/default.png" // fallback image
+                    ? `/products/${product.image}`
+                    : "/products/default.png" // fallback image
                 }
                 alt={product.name}
                 width={150}
