@@ -8,9 +8,11 @@ export async function GET () {
     redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/facebook/callback`,
     scope: 'email,public_profile',
     response_type: 'code',
-    auth_type: 'rerequest' // ensures re-prompt if user declined before
+    auth_type: 'rerequest', // ensures re-prompt if user declined before
+    display: 'popup'
   }
 
   const qs = new URLSearchParams(options)
   return NextResponse.redirect(`${rootUrl}?${qs.toString()}`)
 }
+
