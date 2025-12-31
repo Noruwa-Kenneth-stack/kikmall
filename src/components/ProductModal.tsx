@@ -18,6 +18,7 @@ import { FlyerProduct } from "@/types/flyerProduct";
 import { Star, ShoppingCart, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useShoppingList } from "@/contexts/ShoppingListContext";
+import { getProductImage } from "@/utils/getProductImage";
 
 interface ComparisonItem extends FlyerProduct {
   storeName: string;
@@ -146,7 +147,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
                 <div className="w-full max-w-[360px] h-[320px] flex items-center justify-center bg-gray-50 rounded">
                   {product.image ? (
                     <Image
-                      src={product.image.trim()}
+                      src={getProductImage(product.image)}
                       alt={product.name}
                       width={300}
                       height={300}
@@ -165,7 +166,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
                           className="w-14 h-14 p-1 bg-white rounded shadow-sm"
                         >
                           <Image
-                            src={img.trim()}
+                            src={getProductImage(img)}
                             alt={`thumb-${idx}`}
                             width={56}
                             height={56}

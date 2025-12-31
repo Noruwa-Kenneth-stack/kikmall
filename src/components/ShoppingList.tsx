@@ -12,6 +12,7 @@ import ShoppingListModal from "./ShoppingListModal";
 import { Badge } from "@/components/ui/badge";
 import { Flame } from "lucide-react";
 import { useShoppingList } from "@/contexts/ShoppingListContext";
+import { getProductImage } from "@/utils/getProductImage";
 
 interface FlyerProduct extends BaseFlyerProduct {
   isPlaceholder?: boolean;
@@ -157,7 +158,7 @@ export default function ShoppingListPage({ city }: { city: string }) {
       (rec) => rec.name.toLowerCase() === compareKey.toLowerCase()
     );
 
-    const src = iconMatch?.icon || dbImage || "/icons/cart.png";
+    const src = iconMatch ? `/items/${iconMatch.icon}` : (dbImage || "/icons/cart.png");
 
     return (
       <Image
@@ -346,7 +347,18 @@ export default function ShoppingListPage({ city }: { city: string }) {
                                         e.stopPropagation();
                                         removeFromShoppingList(product.id);
                                       }}
-                                      className="absolute top-2 right-2 flex items-center justify-center w-6 h-6 rounded-full bg-gray-200 text-gray-400 hover:text-red-500 hover:bg-red-100 opacity-0 group-hover:opacity-100 transition-all duration-200 shadow-md"
+                                     className="
+  absolute top-2 right-2
+  flex items-center justify-center
+  w-6 h-6 rounded-full
+  bg-gray-200 text-gray-400
+  hover:text-red-500 hover:bg-red-100
+  shadow-md transition-all duration-200
+
+  opacity-100 md:opacity-0
+  md:group-hover:opacity-100
+"
+
                                     >
                                       <Trash2 className="h-4 w-4" />
                                     </button>
@@ -354,7 +366,7 @@ export default function ShoppingListPage({ city }: { city: string }) {
                                     {/* Product image */}
                                     <div className=" flex items-center justify-center w-full h-[100px] rounded-md overflow-hidden">
                                       <Image
-                                        src={product.image || "/icons/cart.png"}
+                                      src={getProductImage(product.image)|| "/icons/cart.png"}
                                         alt={product.name}
                                         width={100}
                                         height={100}
@@ -471,7 +483,15 @@ export default function ShoppingListPage({ city }: { city: string }) {
                                   <div className="flex items-center gap-2">
                                     <button
                                       onClick={() => onDeleteItem(compareKey)}
-                                      className="opacity-0 group-hover:opacity-100 p-1 rounded-full bg-white text-red-600 hover:bg-red-200 transition-opacity duration-200 mr-2"
+                                      className="
+  p-1 mr-2 rounded-full
+  bg-white text-red-600
+  hover:bg-red-200 transition-opacity duration-200
+
+  opacity-100 md:opacity-0
+  md:group-hover:opacity-100
+"
+
                                     >
                                       <Trash2 className="h-4 w-4" />
                                     </button>
