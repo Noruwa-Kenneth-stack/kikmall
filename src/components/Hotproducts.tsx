@@ -5,6 +5,7 @@ import Image from "next/image";
 import React, {  useState } from "react";
 import { FlyerProduct } from "@/types/flyerProduct";
 import { Countdown } from "@/components/Countdown";
+import { getProductImage } from "@/utils/getProductImage";
 
 interface Props {
   products: FlyerProduct[];
@@ -50,7 +51,7 @@ const Hotproducts: React.FC<Props> = ({ products }) => {
         {/* Product image */}
         <div className="w-20 sm:w-24 flex-shrink-0">
           <Image
-            src={featuredProduct.image}
+            src={getProductImage(featuredProduct?.image || "")}
             alt={featuredProduct.name}
             width={100}
             height={100}
