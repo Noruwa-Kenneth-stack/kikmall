@@ -158,7 +158,9 @@ export default function ShoppingListPage({ city }: { city: string }) {
       (rec) => rec.name.toLowerCase() === compareKey.toLowerCase()
     );
 
-    const src = iconMatch ? `/items/${iconMatch.icon}` : (dbImage || "/icons/cart.png");
+    const src = iconMatch
+      ? `/items/${iconMatch.icon}`
+      : dbImage || "/icons/cart.png";
 
     return (
       <Image
@@ -347,7 +349,7 @@ export default function ShoppingListPage({ city }: { city: string }) {
                                         e.stopPropagation();
                                         removeFromShoppingList(product.id);
                                       }}
-                                     className="
+                                      className="
   absolute top-2 right-2
   flex items-center justify-center
   w-6 h-6 rounded-full
@@ -358,7 +360,6 @@ export default function ShoppingListPage({ city }: { city: string }) {
   opacity-100 md:opacity-0
   md:group-hover:opacity-100
 "
-
                                     >
                                       <Trash2 className="h-4 w-4" />
                                     </button>
@@ -366,7 +367,10 @@ export default function ShoppingListPage({ city }: { city: string }) {
                                     {/* Product image */}
                                     <div className=" flex items-center justify-center w-full h-[100px] rounded-md overflow-hidden">
                                       <Image
-                                      src={getProductImage(product.image)|| "/icons/cart.png"}
+                                        src={
+                                          getProductImage(product.image) ||
+                                          "/icons/cart.png"
+                                        }
                                         alt={product.name}
                                         width={100}
                                         height={100}
@@ -491,7 +495,6 @@ export default function ShoppingListPage({ city }: { city: string }) {
   opacity-100 md:opacity-0
   md:group-hover:opacity-100
 "
-
                                     >
                                       <Trash2 className="h-4 w-4" />
                                     </button>
@@ -731,7 +734,7 @@ export default function ShoppingListPage({ city }: { city: string }) {
                               {/* Image */}
                               <div className="relative w-full   h-[120px] sm:h-[90px] md:h-[100px] flex items-center justify-center overflow-hidden">
                                 <Image
-                                  src={product.image || "/icons/cart.png"}
+                                 src={getProductImage(product.image)|| "/icons/cart.png"}
                                   alt={product.name}
                                   width={130}
                                   height={130}
