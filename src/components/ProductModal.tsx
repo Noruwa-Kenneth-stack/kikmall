@@ -194,7 +194,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
                     <Star
                       key={i}
                       className={`w-4 h-4 ${
-                        i < (product.rating || 0)
+                        i < (product.rating || 4)
                           ? "fill-yellow-400 text-yellow-400"
                           : "text-gray-300"
                       }`}
