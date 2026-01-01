@@ -54,7 +54,7 @@ export function ImageSlider({
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Main Slider Container */}
-      <div className="relative aspect-[3/1] overflow-hidden bg-red-400 ">
+      <div className="relative aspect-[4/3] sm:aspect-[16/9] lg:aspect-[3/1] overflow-hidden bg-red-400">
         {images.map((image, index) => (
           <div
             key={index}
@@ -82,7 +82,7 @@ export function ImageSlider({
             <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" />
 
             {/* Text Content Overlay */}
-            <div className="relative z-10 flex flex-col justify-center h-full px-6 py-8 md:px-12 lg:px-16 text-white max-w-2xl">
+            <div className=" store-ads relative z-10 flex flex-col justify-center h-full px-6 py-8 md:px-12 lg:px-16 text-white max-w-2xl">
               {image.title && (
                 <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold leading-tight mb-3 md:mb-4 animate-fade-in">
                   {image.title}

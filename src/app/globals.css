@@ -565,3 +565,19 @@ html {
   scroll-behavior: smooth;
 }
 
+@media (max-width: 385px) {
+  .store-ads h2 {
+    font-size: 1.10rem; /* ~18px */
+    line-height: 1;
+  }
+
+  .store-ads p {
+    font-size: 0.75rem; /* 12px */
+    line-height: 1.1;
+  }
+
+  .store-ads button {
+    font-size: 0.680rem; /* 11px */
+    padding: 0.370rem 0.70rem; /* smaller tap target */
+  }
+}
